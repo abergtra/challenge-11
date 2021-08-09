@@ -24,18 +24,16 @@ app.use(express.static('public'));
         res.json(allNotes.slice(1));
     });
 
-//Create HTML routes
-    //return the index.html file
+//Create routes
+    //GET the index.html file
     app.get('/', (req, res) => {
         res.sendFile(path.join(__dirname, './public/index.html'));
     });
-    //return the notes.html file
+    //GET the notes.html file
     app.get('/notes', (req, res) => {
         res.sendFile(path.join(__dirname, './public/notes.html'));
     });
-    
-//Create API routes
-    //return the index.html file
+    //route handler for all GET requests
     app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname, './public/index.html'));
     });
