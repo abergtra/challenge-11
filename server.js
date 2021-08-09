@@ -42,7 +42,18 @@ app.use(express.static('public'));
 //Function for New Notes
     function newNote (notesBody, notesArray) {
         const body = notesBody;
-        
+        if (!Array.isArray(notesArray))
+            notesArray = [];
+        if (notesArray.length === 0)
+            notesArray.push(0);
+            notesBody.id = notesArray[0];
+            notesArray[0]++;
+        notesArray.push(body);
+        fs.writeFileSync(
+            path.join(__dirname, '.db/db.json'),
+            JSON.stringify(notesArray, null, 2)
+        );
+        return body
     }
 
 //App Listener to connect to port
