@@ -39,7 +39,13 @@ app.use(express.static('public'));
     });
 
 
+//Function for New Notes
+    function newNote (notesBody, notesArray) {
+        const body = notesBody;
+        
+    }
 
+//App Listener to connect to port
     app.listen(PORT, () => {
         console.log(`Listening on port ${PORT}!`);
     })
