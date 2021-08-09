@@ -56,6 +56,12 @@ app.use(express.static('public'));
         return body
     }
 
+//Post funtion for new notes
+    app.post('/api/notes', (req, res) => {
+        const body = newNote(req.body, allNotes);
+        res.json(body);
+    });
+
 //App Listener to connect to port
     app.listen(PORT, () => {
         console.log(`Listening on port ${PORT}!`);
