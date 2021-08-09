@@ -19,3 +19,32 @@ app.use(express.json());
 //Serve static files from "public" directory
 app.use(express.static('public'));
 
+//Get user input in json format
+    app.get('/api/notes', (req, res) => {
+        res.json(allNotes.slice(1));
+    });
+
+//Create HTML routes
+    //return the notes.html file
+    app.get('/notes', (req, res) => {
+        res.sendFile(path.join(__dirname, './public/notes.html'));
+    });
+    //return the index.html file
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, './public/index.html'));
+    });
+//Create API routes
+    //return the notes.html file
+    app.get('/api/notes', (req, res) => {
+        res.sendFile(path.join(__dirname, './public/notes.html'));
+    });
+    //return the index.html file
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, './public/index.html'));
+    });
+
+
+
+    app.listen(PORT, () => {
+        console.log(`Listening on port ${PORT}!`);
+    })
