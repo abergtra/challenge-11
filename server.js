@@ -39,27 +39,27 @@ app.use(express.static('public'));
     });
 
 
-//Function for New Notes
-    function newNote (notesBody, notesArray) {
-        const body = notesBody;
+//Function to make New Notes
+    function makeNewNote (body, notesArray) {
+        const newNote = body;
         if (!Array.isArray(notesArray))
             notesArray = [];
         if (notesArray.length === 0)
             notesArray.push(0);
-            notesBody.id = notesArray[0];
+            body.id = notesArray[0];
             notesArray[0]++;
-        notesArray.push(body);
+        notesArray.push(newNote);
         fs.writeFileSync(
             path.join(__dirname, '.db/db.json'),
             JSON.stringify(notesArray, null, 2)
         );
-        return body
+        return newNote
     }
 
 //Post funtion for new notes
     app.post('/api/notes', (req, res) => {
-        const body = newNote(req.body, allNotes);
-        res.json(body);
+        const newNote = makeNewNote(req.body, allNotes);
+        res.json(newNote);
     });
 
 //App Listener to connect to port
