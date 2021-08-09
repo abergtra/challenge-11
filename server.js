@@ -7,7 +7,7 @@ const path = require('path');
 const express = require('express');
 
 //Dependencies from database folder
-const allNotes = require('./db/db.json')
+const allNotes = require('./db/db.json');
 
 //Set up Express App
 const app = express();
@@ -53,7 +53,7 @@ app.use(express.static('public'));
             path.join(__dirname, '.db/db.json'),
             JSON.stringify(notesArray, null, 2)
         );
-        return newNote
+        return newNote;
     }
 
 //Post funtion for new notes
@@ -65,4 +65,4 @@ app.use(express.static('public'));
 //App Listener to connect to port
     app.listen(PORT, () => {
         console.log(`Listening on port ${PORT}!`);
-    })
+    });
