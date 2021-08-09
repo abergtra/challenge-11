@@ -40,7 +40,7 @@ app.use(express.static('public'));
 
 
 //Function to make New Notes
-    function makeNewNote (body, notesArray) {
+    function createNewNote (body, notesArray) {
         const newNote = body;
         if (!Array.isArray(notesArray))
             notesArray = [];
@@ -58,7 +58,7 @@ app.use(express.static('public'));
 
 //Post funtion for new notes
     app.post('/api/notes', (req, res) => {
-        const newNote = makeNewNote(req.body, allNotes);
+        const newNote = createNewNote(req.body, allNotes);
         res.json(newNote);
     });
 
