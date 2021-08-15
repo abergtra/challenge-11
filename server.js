@@ -1,16 +1,18 @@
 //call PORT and specify number
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3003;
 
 //Dependencies from package-lock.json
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
 
+//Set up Express App
+const app = express();
+
 //Dependencies from database folder
 const allNotes = require('./db/db.json');
 
-//Set up Express App
-const app = express();
+
 
 //Parse incoming string or array data
 app.use(express.urlencoded({ extended: true }));
@@ -21,7 +23,7 @@ app.use(express.static('public'));
 
 //Get user input in json format
     app.get('/api/notes', (req, res) => {
-        res.json(allNotes.slice(1));
+        res.json(allNotes);
     });
 
 //Create routes
@@ -45,13 +47,16 @@ app.use(express.static('public'));
         if (!Array.isArray(notesArray))
             notesArray = [];
         if (notesArray.length === 0)
-            notesArray.push(0);
-            body.id = notesArray[0];
-            notesArray[0]++;
+            body.id = 1;
+        else   
+        body.id = notesArray[notesArray.length - 1].id + 1;
+        
+        
         notesArray.push(newNote);
+        console.log(notesArray);
         fs.writeFileSync(
-            path.join(__dirname, '.db/db.json'),
-            JSON.stringify(notesArray, null, 2)
+            path.join(__dirname, './db/db.json'),
+            JSON.stringify(notesArray)
         );
         return newNote;
     }
@@ -60,6 +65,27 @@ app.use(express.static('public'));
     app.post('/api/notes', (req, res) => {
         const newNote = createNewNote(req.body, allNotes);
         res.json(newNote);
+    });
+
+    function deleteNote(id, notesArray) {
+        for (let i = 0; i < notesArray.length; i++) {
+            let note = notesArray[i];
+    
+            if (note.id == id) {
+                notesArray.splice(i, 1);
+                fs.writeFileSync(
+                    path.join(__dirname, './db/db.json'),
+                    JSON.stringify(notesArray, null, 2)
+                );
+    
+                break;
+            }
+        }
+    }
+    
+    app.delete('/api/notes/:id', (req, res) => {
+        deleteNote(req.params.id, allNotes);
+        res.json(true);
     });
 
 //App Listener to connect to port
