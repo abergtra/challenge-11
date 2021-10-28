@@ -1,5 +1,5 @@
   # Project Title
-  Challenge 11 
+  note-taker-app 
   ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
   
   # Description
